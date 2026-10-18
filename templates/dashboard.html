@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Screening Result</title>
+<style>
+  body { font-family: Arial, sans-serif; background:#f3f5f9; margin:0; color:#1f2937; }
+  .wrap { max-width: 640px; margin: 40px auto; background:#fff; padding: 30px 34px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+  h1 { margin: 0 0 18px; font-size: 24px; }
+  .card { border-radius: 10px; padding: 20px; margin-bottom: 18px; }
+  .flag { background:#fef3c7; border:1px solid #f59e0b; }
+  .ok   { background:#dcfce7; border:1px solid #22c55e; }
+  .err  { background:#fee2e2; border:1px solid #ef4444; }
+  .result { font-size: 22px; font-weight: bold; margin: 0 0 6px; }
+  .score { font-size: 14px; color:#374151; }
+  .note { background:#eff6ff; color:#1e3a8a; padding:12px 14px; border-radius:8px; font-size:13px; line-height:1.5; margin-bottom: 12px; }
+  .links a { color:#2563eb; margin-right: 18px; font-size:14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Screening Result</h1>
+
+  {% if error %}
+    <div class="card err"><p class="result">Model unavailable</p><p class="score">{{ error }}</p></div>
+  {% elif flagged %}
+    <div class="card flag">
+      <p class="result">Higher screening risk</p>
+      <p class="score">Model score: {{ score }} / 100 &nbsp;|&nbsp; Model: {{ model_name }}</p>
+    </div>
+    <div class="note">Your answers resemble people who scored 10 or higher on the PHQ-9 depression questionnaire. This is not a diagnosis. Consider completing a full screening or speaking with a health professional.</div>
+  {% else %}
+    <div class="card ok">
+      <p class="result">Lower screening risk</p>
+      <p class="score">Model score: {{ score }} / 100 &nbsp;|&nbsp; Model: {{ model_name }}</p>
+    </div>
+    <div class="note">Your answers do not closely resemble people who scored 10 or higher on the PHQ-9. This does not rule out depression. If you are struggling, please speak with a health professional.</div>
+  {% endif %}
+
+  <div class="note">
+    <b>How to read the score:</b> the model was trained on a balanced sample, so the score is not the real-world chance of depression. The result compares your score with a fixed cutoff chosen during training. You entered {{ n_inputs }} values; leaving fields blank makes the result less reliable.
+  </div>
+  <div class="note">This tool is a research prototype and a screening aid only, not a medical diagnosis.</div>
+
+  <div class="links">
+    <a href="{{ url_for('home') }}">Run another screening</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+  </div>
+</div>
+</body>
+</html>

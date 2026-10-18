@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Register | Depression Risk Screening</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #43cea2, #185a9d);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.box {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+h2 { margin-top: 0; }
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 14px;
+}
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    background: #43cea2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+}
+button:hover { background: #38b48c; }
+.error {
+    background: #fee2e2;
+    color: #991b1b;
+    font-size: 13px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
+.hint { font-size: 12px; color: #6b7280; margin: 2px 0 6px; }
+.footer { margin-top: 14px; font-size: 13px; }
+.footer a { color: #185a9d; }
+</style>
+</head>
+<body>
+
+<div class="box">
+<h2>Register</h2>
+
+{% if error %}<div class="error">{{ error }}</div>{% endif %}
+
+<form method="POST">
+<input type="text" name="username" placeholder="Choose Username" value="{{ username or '' }}" required>
+<p class="hint">3-30 letters, numbers or underscore</p>
+<input type="password" name="password" placeholder="Choose Password" required>
+<input type="password" name="confirm" placeholder="Confirm Password" required>
+<p class="hint">At least 6 characters</p>
+<button type="submit">Register</button>
+</form>
+
+<div class="footer">
+<p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+</div>
+</div>
+
+</body>
+</html>
